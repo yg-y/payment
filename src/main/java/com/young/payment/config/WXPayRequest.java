@@ -24,8 +24,6 @@ import java.net.UnknownHostException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
 
-import static com.github.wxpay.sdk.WXPayConstants.USER_AGENT;
-
 public class WXPayRequest {
     private WXPayConfig config;
     public WXPayRequest(WXPayConfig config) throws Exception{
@@ -102,7 +100,7 @@ public class WXPayRequest {
 
         StringEntity postEntity = new StringEntity(data, "UTF-8");
         httpPost.addHeader("Content-Type", "text/xml");
-        httpPost.addHeader("User-Agent", USER_AGENT + " " + config.getMchID());
+        httpPost.addHeader("User-Agent", WXPayConstants.USER_AGENT + " " + config.getMchID());
         httpPost.setEntity(postEntity);
 
         HttpResponse httpResponse = httpClient.execute(httpPost);

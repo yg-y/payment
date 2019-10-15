@@ -9,7 +9,7 @@ public class WXConfig extends WXPayConfig {
     private byte[] certData;
 
     public WXConfig() throws Exception {
-        String certPath = "/path/to/apiclient_cert.p12";
+        String certPath = "D:\\IDEA\\IdeaProject\\payment\\src\\main\\resources\\apiclient_cert.pem";
         File file = new File(certPath);
         InputStream certStream = new FileInputStream(file);
         this.certData = new byte[(int) file.length()];
@@ -25,8 +25,14 @@ public class WXConfig extends WXPayConfig {
         return "1559020831";
     }
 
+    /**
+     * API密钥ajoshdasojdalksdioqwekasndlasndl
+     * APIv3密钥asjdhalsfhdasjfhquwoeqlkwaklshdq
+     *
+     * @return
+     */
     public String getKey() {
-        return "88888888888888888888888888888888";
+        return "ajoshdasojdalksdioqwekasndlasndl";
     }
 
     public InputStream getCertStream() {
@@ -44,6 +50,17 @@ public class WXConfig extends WXPayConfig {
 
     @Override
     IWXPayDomain getWXPayDomain() {
-        return null;
+        // 这个方法需要这样实现, 否则无法正常初始化WXPay
+        IWXPayDomain iwxPayDomain = new IWXPayDomain() {
+
+            public void report(String domain, long elapsedTimeMillis, Exception ex) {
+
+            }
+
+            public DomainInfo getDomain(WXPayConfig config) {
+                return new IWXPayDomain.DomainInfo(WXPayConstants.DOMAIN_API, true);
+            }
+        };
+        return iwxPayDomain;
     }
 }
