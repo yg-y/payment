@@ -1,19 +1,13 @@
 package com.young.payment.config;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 
 public class WXConfig extends WXPayConfig {
     private byte[] certData;
 
     public WXConfig() throws Exception {
-        String certPath = "apiclient_cert.p12";
-        File file = new File(certPath);
-        InputStream certStream = new FileInputStream(file);
-        this.certData = new byte[(int) file.length()];
-        certStream.read(this.certData);
+        InputStream certStream = this.getClass().getResourceAsStream("/apiclient_cert.p12");
+        this.certData = read(certStream);
         certStream.close();
     }
 
@@ -62,5 +56,23 @@ public class WXConfig extends WXPayConfig {
             }
         };
         return iwxPayDomain;
+    }
+
+    public static byte[] read(InputStream inputStream) throws IOException {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            byte[] buffer = new byte[1024];
+            int num = inputStream.read(buffer);
+            while (num != -1) {
+                baos.write(buffer, 0, num);
+                num = inputStream.read(buffer);
+            }
+            baos.flush();
+            return baos.toByteArray();
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
     }
 }

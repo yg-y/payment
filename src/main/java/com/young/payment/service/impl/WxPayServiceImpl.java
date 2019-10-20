@@ -74,6 +74,7 @@ public class WxPayServiceImpl implements WxPayService {
         data.put("out_trade_no", wxPayEntity.getOut_trade_no());
         data.put("refund_fee", wxPayEntity.getRefund_fee());
         data.put("total_fee", wxPayEntity.getTotal_fee());
+        //签名参数整合，退款支付需要验签
         String singMd5 = "appid=" + config.getAppID()
                 + "&mch_id=" + config.getMchID()
                 + "&nonce_str" + data.get("nonce_str")
@@ -82,6 +83,7 @@ public class WxPayServiceImpl implements WxPayService {
                 + "&refund_fee=" + data.get("refund_fee")
                 + "&total_fee=" + data.get("total_fee")
                 + "&key=" + config.getKey();
+        //使用微信默认的MD5签名
         String md5Params = MD5Util.stringMD5(singMd5);
         data.put("sign", md5Params.toUpperCase());
         Map<String, String> result = null;
