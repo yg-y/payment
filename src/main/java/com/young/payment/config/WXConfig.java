@@ -9,7 +9,7 @@ public class WXConfig extends WXPayConfig {
     private byte[] certData;
 
     public WXConfig() throws Exception {
-        String certPath = "D:\\IDEA\\IdeaProject\\payment\\src\\main\\resources\\apiclient_cert.p12";
+        String certPath = "apiclient_cert.p12";
         File file = new File(certPath);
         InputStream certStream = new FileInputStream(file);
         this.certData = new byte[(int) file.length()];
