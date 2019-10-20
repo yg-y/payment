@@ -25,4 +25,14 @@ public class WxPayTest {
         R r = wxPayService.micropay(wxPayEntity);
         System.err.println(r.getData().toString());
     }
+
+    @Test
+    public void refund() {
+        WxPayEntity wxPayEntity = new WxPayEntity();
+        wxPayEntity.setOut_trade_no("dc7ecfdd38954ad28d1708df68df623a");
+        wxPayEntity.setTotal_fee("100");
+        wxPayEntity.setRefund_fee("100");
+        R r = wxPayService.refund(wxPayEntity);
+        System.err.println(r.getData());
+    }
 }

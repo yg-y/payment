@@ -53,4 +53,6 @@ public class WxPayEntity implements Serializable {
     private String time_expire;
     private String receipt;
     private String auth_code;
+
+    private String refund_fee;
 }
