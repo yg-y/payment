@@ -12,21 +12,21 @@ public class WXConfig extends WXPayConfig {
     }
 
     public String getAppID() {
-        return "wx3dc8e67ebe73bf0e";
+        return "xxxxxxx";
     }
 
     public String getMchID() {
-        return "1559020831";
+        return "xxxxxx";
     }
 
     /**
-     * API密钥ajoshdasojdalksdioqwekasndlasndl
-     * APIv3密钥asjdhalsfhdasjfhquwoeqlkwaklshdq
+     * API密钥xxxxx
+     * APIv3密钥xxxxx
      *
      * @return
      */
     public String getKey() {
-        return "ajoshdasojdalksdioqwekasndlasndl";
+        return "xxxxx";
     }
 
     public InputStream getCertStream() {
