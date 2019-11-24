@@ -1,13 +1,21 @@
 package com.young.payment;
 
+import com.young.payment.config.CCBPayConfig;
 import com.young.payment.entity.AliPayEntity;
 import com.young.payment.service.AliPayService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.UUID;
 
 @RunWith(SpringRunner.class)
@@ -20,6 +28,42 @@ public class PaymentApplicationTests {
 
     @Autowired
     AliPayService aliPayService;
+
+    @Test
+    public void ccbcBackTest() {
+        String orderId = "1574349649351";
+        String price = "0.01";
+        StringBuffer requestXml = new StringBuffer();
+        requestXml.append("<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>")
+                .append("<TX>")
+                .append("<REQUEST_SN>").append(System.currentTimeMillis()).append("</REQUEST_SN>")
+                .append("<CUST_ID>").append(CCBPayConfig.MERCHANTID).append("</CUST_ID>")
+                .append("<USER_ID>002</USER_ID>")
+                .append("<PASSWORD>lmy19950714</PASSWORD>")
+                .append("<TX_CODE>5W1004</TX_CODE>")
+                .append("<LANGUAGE>CN</LANGUAGE>")
+                .append("<TX_INFO>")
+                .append("<MONEY>").append(price).append("</MONEY>")
+                .append("<ORDER>").append(orderId).append("</ORDER>")
+                .append("<REFUND_CODE>").append(System.currentTimeMillis()).append("</REFUND_CODE>")
+                .append("</TX_INFO>")
+                .append("<SIGN_INFO></SIGN_INFO>")
+                .append("<SIGNCERT></SIGNCERT>")
+                .append("</TX>");
+
+        URI uri = URI.create("http://127.0.0.1:12345");
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        //设置类型
+        MediaType type = MediaType.parseMediaType("application/xml; charset=UTF-8");
+        headers.setContentType(type);
+
+        HttpEntity<String> formEntity = new HttpEntity<String>(requestXml.toString(), headers);
+
+        ResponseEntity<String> result = restTemplate.postForEntity(uri, formEntity, String.class);
+        System.err.println(result);
+    }
 
     /**
      * 生成二维码接口
