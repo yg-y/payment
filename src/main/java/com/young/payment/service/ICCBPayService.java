@@ -7,4 +7,6 @@ public interface ICCBPayService {
     R ccbPayOrder(CCBPayEntity ccbPayEntity);
 
     R ccbPayRotation(CCBPayEntity ccbPayEntity);
+
+    R ccbPayBack(CCBPayEntity ccbPayEntity);
 }

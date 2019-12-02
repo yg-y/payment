@@ -53,4 +53,14 @@ public class CCBPayController {
     public R ccbPayRotation(@RequestBody CCBPayEntity ccbPayEntity) {
         return iccbPayService.ccbPayRotation(ccbPayEntity);
     }
+
+    /**
+     * 外联退款接口
+     *
+     * @return
+     */
+    @PostMapping("/back")
+    public R ccbPayBack(@RequestBody CCBPayEntity ccbPayEntity) {
+        return iccbPayService.ccbPayBack(ccbPayEntity);
+    }
 }
